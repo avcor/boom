@@ -6,6 +6,7 @@ import {GeneralBookType} from '../types/generalBookType';
 import {bookSealedType} from '../types/bookSealadType';
 import {ActivityIndicator} from 'react-native-paper';
 import BookCard from '../comp/BookCard';
+import {favIcon} from '../imageExporter';
 
 const SerchScreen: FC = () => {
   const realm = useRealm();
@@ -49,7 +50,16 @@ const SerchScreen: FC = () => {
             }}
             data={savedBookList.data}
             renderItem={({item}) => {
-              return <BookCard data={item} onSaveFn={deleteProfile} />;
+              return (
+                <BookCard
+                  data={item}
+                  btn1={{
+                    onPress: deleteProfile,
+                    icon: favIcon,
+                    text: 'UnSave',
+                  }}
+                />
+              );
             }}
           />
         </>

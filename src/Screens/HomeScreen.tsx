@@ -8,6 +8,7 @@ import {UpdateMode} from 'realm';
 import {SavedBook} from '../db/modelClass';
 import {GeneralBookType} from '../types/generalBookType';
 import {useRealm} from '@realm/react';
+import {favIcon} from '../imageExporter';
 
 const HomeScreen: FC = ({}) => {
   const {myBookList, queryFn} = useDefaultAndSearchedBook();
@@ -44,7 +45,16 @@ const HomeScreen: FC = ({}) => {
             }}
             data={myBookList.data}
             renderItem={({item}) => {
-              return <BookCard data={item} onSaveFn={addProfile} />;
+              return (
+                <BookCard
+                  data={item}
+                  btn1={{
+                    onPress: addProfile,
+                    icon: favIcon,
+                    text: 'Fav & save',
+                  }}
+                />
+              );
             }}
           />
         </>
