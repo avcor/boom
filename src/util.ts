@@ -1,12 +1,38 @@
-export const numOfCoins = 21;
-export const arr = Array.from(Array(numOfCoins).keys());
-export const set = new Set(arr);
+import { BookListType } from "./types/bookListType";
+import { GeneralBookType } from "./types/generalBookType";
+import { SearcBookedResult } from "./types/searchBookeResultType";
 
-
-export type coinMeta = {
-    id: number;
-    variable: boolean
-}
-export const coinArray: coinMeta[] = Array(21)
-  .fill(null)
-  .map((_, index) => ({ id: index, variable: false }));
+export const defaultToGeneralBookList = (data: BookListType) => {
+    let generalBookTypeList: GeneralBookType[] = [];
+  
+    data.works.forEach(book => {
+      generalBookTypeList.push({
+        key: book.key,
+        url: book.cover_edition_key,
+        title: book.title,
+        author: book.authors.map(author => author.name),
+        genre: book.subject,
+        published: book.first_publish_year.toString(),
+      });
+    });
+  
+    return generalBookTypeList;
+  };
+  
+  export const searchListToGeneralType = (data: SearcBookedResult) => {
+    let generalBookTypeList: GeneralBookType[] = [];
+  
+    data.docs.forEach(element => {
+      generalBookTypeList.push({
+        key: element.key,
+        url: element.cover_edition_key ?? '',
+        title: element.title,
+        author: element.author_name ?? [],
+        genre: [],
+        published: element.first_publish_year?.toString() ?? '',
+      });
+    });
+  
+    return generalBookTypeList;
+  };
+  

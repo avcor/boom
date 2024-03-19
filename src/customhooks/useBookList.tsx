@@ -2,10 +2,12 @@ import {FC, useCallback, useEffect, useState} from 'react';
 import {Text, View} from 'react-native';
 import {BookListType} from '../types/bookListType';
 import axios from 'axios';
+import {GeneralBookType} from '../types/generalBookType';
+import {defaultToGeneralBookList} from '../util';
 
 type bookSealedType = {
   status: 'Success' | 'Failure' | 'Loading';
-  data?: BookListType;
+  data?: GeneralBookType[];
   error?: string;
 };
 
@@ -21,9 +23,10 @@ const useBookList = () => {
     axios
       .get('https://openlibrary.org/subjects/sci-fi.json')
       .then(response => {
+        let newList = defaultToGeneralBookList(response.data as BookListType);
         setBookList({
           status: 'Success',
-          data: response.data as BookListType,
+          data: newList,
           error: undefined,
         });
         console.log('deafult list');
