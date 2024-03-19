@@ -1,10 +1,11 @@
 import {FC} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {GeneralBookType} from '../types/generalBookType';
 import {Button, IconButton} from 'react-native-paper';
 import {favIcon} from '../imageExporter';
 import React from 'react';
+import {useNavigation} from '@react-navigation/native';
 
 type props = {
   data: GeneralBookType;
@@ -23,8 +24,12 @@ const BookCard: FC<props> = ({
     text: '',
   },
 }) => {
+  const navigation = useNavigation();
+
   return (
-    <View style={styles.parent}>
+    <TouchableOpacity
+      style={styles.parent}
+      onPress={() => console.log('press')}>
       <View style={styles.imageContainer}>
         <FastImage
           style={styles.imageView}
@@ -59,7 +64,7 @@ const BookCard: FC<props> = ({
           {btn1.text}
         </Button>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

@@ -8,7 +8,7 @@ import {ActivityIndicator} from 'react-native-paper';
 import BookCard from '../comp/BookCard';
 import {favIcon} from '../imageExporter';
 
-const SerchScreen: FC = () => {
+const SavedScreen: FC = () => {
   const realm = useRealm();
   const savedBook = realm.objects<SavedBook>('SavedBook');
 
@@ -39,36 +39,36 @@ const SerchScreen: FC = () => {
   return (
     <View style={styles.parent}>
       <Text style={styles.heading}>Saved And Favourite Boooks</Text>
-      {savedBookList.status === 'Loading' ? (
-        <ActivityIndicator />
-      ) : (
-        <>
-          <FlatList
-            style={styles.flatlist}
-            ItemSeparatorComponent={() => {
-              return <View style={styles.sepratorCompoenent} />;
-            }}
-            data={savedBookList.data}
-            renderItem={({item}) => {
-              return (
-                <BookCard
-                  data={item}
-                  btn1={{
-                    onPress: deleteProfile,
-                    icon: favIcon,
-                    text: 'UnSave',
-                  }}
-                />
-              );
-            }}
-          />
-        </>
+      {savedBookList.status === 'Loading' && <ActivityIndicator />}
+      {savedBookList.status === 'Success' && (
+        <FlatList
+          style={styles.flatlist}
+          ItemSeparatorComponent={() => {
+            return <View style={styles.sepratorCompoenent} />;
+          }}
+          data={savedBookList.data}
+          renderItem={({item}) => {
+            return (
+              <BookCard
+                data={item}
+                btn1={{
+                  onPress: deleteProfile,
+                  icon: favIcon,
+                  text: 'UnSave',
+                }}
+              />
+            );
+          }}
+        />
+      )}
+      {savedBookList.status === 'Failure' && (
+        <Text>{`Encountered Error ${savedBookList.error}`}</Text>
       )}
     </View>
   );
 };
 
-export default SerchScreen;
+export default SavedScreen;
 
 const styles = StyleSheet.create({
   parent: {

@@ -34,30 +34,31 @@ const HomeScreen: FC = ({}) => {
   return (
     <View style={styles.parent}>
       <SearchBarWithIcon onSubmitFn={queryFn} />
-      {myBookList.status === 'Loading' ? (
-        <ActivityIndicator />
-      ) : (
-        <>
-          <FlatList
-            style={styles.flatlist}
-            ItemSeparatorComponent={() => {
-              return <View style={styles.sepratorCompoenent} />;
-            }}
-            data={myBookList.data}
-            renderItem={({item}) => {
-              return (
-                <BookCard
-                  data={item}
-                  btn1={{
-                    onPress: addProfile,
-                    icon: favIcon,
-                    text: 'Fav & save',
-                  }}
-                />
-              );
-            }}
-          />
-        </>
+      {myBookList.status === 'Loading' && <ActivityIndicator />}
+      {myBookList.status === 'Success' && (
+        <FlatList
+          style={styles.flatlist}
+          ItemSeparatorComponent={() => {
+            return <View style={styles.sepratorCompoenent} />;
+          }}
+          data={myBookList.data}
+          renderItem={({item}) => {
+            return (
+              <BookCard
+                data={item}
+                btn1={{
+                  onPress: addProfile,
+                  icon: favIcon,
+                  text: 'Fav & save',
+                }}
+              />
+            );
+          }}
+          keyExtractor={(item, index) => index.toString()}
+        />
+      )}
+      {myBookList.status === 'Failure' && (
+        <Text>{`Encountered Error ${myBookList.error}`}</Text>
       )}
     </View>
   );

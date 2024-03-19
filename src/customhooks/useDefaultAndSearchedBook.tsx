@@ -3,7 +3,7 @@ import useBookList from './useBookList';
 import useSearchBookList from './useSearchBookList';
 import {GeneralBookType} from '../types/generalBookType';
 
-type bookSealedType = {
+export type bookSealedType = {
   status: 'Success' | 'Failure' | 'Loading';
   data?: GeneralBookType[];
   error?: string;
